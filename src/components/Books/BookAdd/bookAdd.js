@@ -6,10 +6,9 @@ const BookAdd = (props) => {
     const history = useHistory();
     const [formData, updateFormData] = React.useState({
         name: "",
-        price: 0,
-        quantity: 0,
         category: 1,
-        manufacturer: 1
+        author: 1,
+        availableCopies : 1
     })
 
     const handleChange = (e) => {
@@ -22,13 +21,12 @@ const BookAdd = (props) => {
     const onFormSubmit = (e) => {
         e.preventDefault();
         const name = formData.name;
-        const price = formData.price;
-        const quantity = formData.quantity;
         const category = formData.category;
-        const manufacturer = formData.manufacturer;
+        const author = formData.author;
+        const availableCopies = formData.availableCopies;
 
-        props.onAddBook(name, price, quantity, category, manufacturer);
-        history.push("/products");
+        props.onAddBook(name, category, author, availableCopies);
+        history.push("/books");
     }
 
     return(
@@ -42,29 +40,7 @@ const BookAdd = (props) => {
                                id="name"
                                name="name"
                                required
-                               placeholder="Enter product name"
-                               onChange={handleChange}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="price">Price</label>
-                        <input type="text"
-                               className="form-control"
-                               id="price"
-                               name="price"
-                               placeholder="Price"
-                               required
-                               onChange={handleChange}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="quantity">Quantity</label>
-                        <input type="text"
-                               className="form-control"
-                               id="quantity"
-                               name="quantity"
-                               placeholder="Quantity"
-                               required
+                               placeholder="Enter book name"
                                onChange={handleChange}
                         />
                     </div>
@@ -72,17 +48,28 @@ const BookAdd = (props) => {
                         <label>Category</label>
                         <select name="category" className="form-control" onChange={handleChange}>
                             {props.categories.map((term) =>
+                                <option value={term}>{term}</option>
+                            )}
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Author</label>
+                        <select name="author" className="form-control" onChange={handleChange}>
+                            {props.authors.map((term) =>
                                 <option value={term.id}>{term.name}</option>
                             )}
                         </select>
                     </div>
                     <div className="form-group">
-                        <label>Manufacturer</label>
-                        <select name="manufacturer" className="form-control" onChange={handleChange}>
-                            {props.manufacturers.map((term) =>
-                                <option value={term.id}>{term.name}</option>
-                            )}
-                        </select>
+                        <label htmlFor="availableCopies">Available Copies</label>
+                        <input type="text"
+                               className="form-control"
+                               id="availableCopies"
+                               name="availableCopies"
+                               placeholder="Available Copies"
+                               required
+                               onChange={handleChange}
+                        />
                     </div>
                     <button id="submit" type="submit" className="btn btn-primary">Submit</button>
                 </form>

@@ -1,8 +1,11 @@
-import axios from "axios"
+import axios from '../custom-axios/axios';
 
 const LibraryService = {
     fetchCategories: () => {
         return axios.get('/categories');
+    },
+    fetchAuthors: () => {
+        return axios.get('/authors');
     },
     fetchBooks: () => {
         return axios.get('/books');

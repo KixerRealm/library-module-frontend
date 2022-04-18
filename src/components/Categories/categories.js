@@ -9,14 +9,13 @@ const Categories = (props) => {
                         <thead>
                         <tr>
                             <th scope={"col"}>Name</th>
-                            <th scope={"col"}>Description</th>
                         </tr>
                         </thead>
                         <tbody>
                         {props.categories.map((term) => {
                             return (
                                 <tr>
-                                    <td>{term.name}</td>
+                                    <td>{term}</td>
                                 </tr>
                             );
                         })}

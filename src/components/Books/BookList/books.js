@@ -3,6 +3,7 @@ import ReactPaginate from 'react-paginate'
 import BookTerm from '../BookTerm/bookTerm';
 import {Link} from 'react-router-dom';
 
+
 class Books extends React.Component {
 
     constructor(props) {
@@ -46,17 +47,18 @@ class Books extends React.Component {
                         </div>
                     </div>
                 </div>
-                <ReactPaginate previousLabel={"back"}
-                               nextLabel={"next"}
+                <ReactPaginate previousLabel={"< previous"}
+                               nextLabel={"next >"}
                                breakLabel={<a href="/#">...</a>}
-                               breakClassName={"break-me"}
-                               pageClassName={"ml-1"}
+                               breakClassName={"page-item"}
+                               pageClassName={"page-item"}
                                pageCount={pageCount}
                                marginPagesDisplayed={2}
                                pageRangeDisplayed={5}
                                onPageChange={this.handlePageClick}
                                containerClassName={"pagination m-4 justify-content-center"}
-                               activeClassName={"active"}/>
+                               activeClassName={"active"}
+                />
             </div>
         )
     }
@@ -71,7 +73,7 @@ class Books extends React.Component {
     getBooksPage = (offset, nextPageOffset) => {
         return this.props.books.map((term, index) => {
             return (
-                <BookTerm term={term} onDelete={this.props.onDelete} onEdit={this.props.onEdit}/>
+                <BookTerm term={term} onDelete={this.props.onDelete} onEditBook={this.props.onEditBook} onTake={this.props.onTake}/>
             );
         }).filter((book, index) => {
             return index >= offset && index < nextPageOffset;

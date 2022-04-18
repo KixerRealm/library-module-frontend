@@ -1,4 +1,4 @@
-import './App.css';
+//import './App.css';
 import React, {Component} from "react"
 import {BrowserRouter as Router, Redirect, Route} from "react-router-dom";
 import LibraryService from "../../repository/libraryRepository";
@@ -15,6 +15,7 @@ class App extends Component{
     super(props, context);
     this.state = {
       categories: [],
+      authors : [],
       books: [],
       selectedBook: {}
     }
@@ -26,19 +27,16 @@ class App extends Component{
               <Header/>
               <main>
                   <div className={"container"}>
-                      <Books books={this.state.books} onDelete={this.deleteBook} onEdit={this.getBook} />
-                      {/*
                       <Route path={"/categories"}  render={() => <Categories categories={this.state.categories}/>}/>
                       <Route path={"/books/add"} exact render={() =>
-                          <BookAdd categories={this.state.categories} manufacturers={this.state.manufacturers}
-                                      onAddBooks={this.addBook}/>}/>
+                          <BookAdd categories={this.state.categories} authors={this.state.authors}
+                                      onAddBook={this.addBook}/>}/>
                       <Route path={"/books/edit/:id"} exact render={() =>
-                          <BookEdit categories={this.state.categories} manufacturers={this.state.manufacturers}
-                                       onEditBooks={this.editBook} book={this.state.selectedBook}/>}/>
+                          <BookEdit categories={this.state.categories} authors={this.state.authors}
+                                       onEditBook={this.editBook} book={this.state.selectedBook}/>}/>
                       <Route path={"/books"}  render={() =>
-                          <Books books={this.state.books} onDelete={this.deleteBook} onEdit={this.getBook} />}/>
+                          <Books books={this.state.books} onDelete={this.deleteBook} onEditBook={this.getBook} onTake={this.takeBook} />}/>
                       <Redirect to={"/books"}/>
-                      */}
                   </div>
               </main>
           </Router>
@@ -47,7 +45,8 @@ class App extends Component{
 
 
   componentDidMount() {
-    //this.loadCategories();
+    this.loadCategories();
+    this.loadAuthors();
     this.loadBooks();
   }
 
@@ -55,16 +54,29 @@ class App extends Component{
   loadCategories = () => {
     LibraryService.fetchCategories()
         .then((data) => {
+            console.log(data)
           this.setState({
             categories: data.data
           })
         });
   }
 
+  loadAuthors = () => {
+      LibraryService.fetchAuthors()
+          .then((data) => {
+               console.log(data)
+              this.setState({
+                  authors: data.data
+              })
+          });
+  }
+
   loadBooks = () => {
     LibraryService.fetchBooks()
         .then((data) => {
-          this.setState({
+            console.log(data)
+
+            this.setState({
             books: data.data
           })
         });
@@ -75,6 +87,13 @@ class App extends Component{
         .then(() => {
           this.loadBooks();
         })
+  }
+
+  takeBook = (id) => {
+      LibraryService.takeBook(id)
+          .then(() => {
+              this.loadBooks();
+          })
   }
 
   addBook = (name, category, author, availableCopies) => {
