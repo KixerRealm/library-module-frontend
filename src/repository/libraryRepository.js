@@ -33,7 +33,7 @@ const LibraryService = {
         return axios.get(`/books/${id}`);
     },
     takeBook: (id) => {
-        return axios.post(`/books/${id}/take`)
+        return axios.post(`/books/take/${id}`)
     }
 }
 
